@@ -24,7 +24,7 @@
       "question":
         "String values must be enclosed within ________ when being assigned to variables",
       "choices": ["commas", "curly braces", "quotes", "parenthesis"],
-      "answer": "parenthesis"
+      "answer": "quotes"
     },
     {
       "question":

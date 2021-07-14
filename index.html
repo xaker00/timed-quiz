@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Code Quiz</title>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Code Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="container">
+    <div id="status-bar" class="row bg-dark text-light p-2">
+      <div id="view-scores" class="col-6">View High Scores</div>
+      <div class="col-6 text-right"><span id="time"></span></div>
+    </div>
 
-    </head>
-    <body>
-        <div id="status-bar">
-            <div id="view-scores">View High Scores</div>
-            <div>Time: <span id="time"></span></div>
-        </div>
+    <main id="main" class="text-center-"></main>
 
-        <main id="main">
-
-        </main>
-
-        <!-- Load script last -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="./script.js"></script>
-    </body>   
+    <!-- Load script last -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
 </html>

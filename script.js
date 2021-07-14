@@ -13,10 +13,10 @@ var highScores;
 // show the intro and the "start quiz" button
 function renderIntro() {
   mainEl.html(`
-    <h1>Coding Quiz Challenge</h1>
+    <h3>Coding Quiz Challenge</h3>
     <p>${instructions}</p>
     <p>Keep in mind that incorrect answers will penalize your score/time by ten seconds</p>
-    <div class='button' id='start-button'>Start Quiz</div>
+    <button type="button" class="btn btn-primary" id="start-button">Start Quiz</button>
     `);
 
   var buttonEl = $("#start-button");
@@ -32,11 +32,11 @@ function startQuiz() {
 }
 
 function renderQuestion(question) {
-  mainEl.empty().append($("<h1>").text(question.question));
+  mainEl.empty().append($("<h3>").text(question.question).addClass('question-text text-justify'));
 
-  var olEl = $("<ol>");
+  var olEl = $("<ol>").addClass('list-group');
   for (var i = 0; i < question.choices.length; i++) {
-    olEl.append($("<li>").addClass('answer-btn').text(question.choices[i]));
+    olEl.append($("<li>").addClass('answer-btn list-group-item list-group-item-action').text(question.choices[i]));
   }
   mainEl.append(olEl);
 }
@@ -64,13 +64,21 @@ function incorrectAnswer(){
     renderResult('wrong');
 }
 
-// show the result and clear it after 2 seconds
+// show the result and clear it after 1.5 seconds
 function renderResult(r){
-    mainEl.append($("<p>").text(r).addClass("result-text"));
+    var alertEl = $('<div>').text(r).addClass('result-text text-center p-2 m-2');
+    if(r === 'correct'){
+        alertEl.addClass('alert-success');
+    }else{
+        alertEl.addClass('alert-danger');
+    }
+
+    mainEl.append(alertEl);
+    clearInterval(t);
     var t = setInterval(function(){
         $('.result-text').remove();
         clearInterval(t);
-    }, 2000);
+    }, 1500);
 }
 
 function nextQuestion(){
@@ -96,18 +104,17 @@ function checkTimeOut(){
 
 function endQuiz(){
     var score = remainingTime;
-    mainEl.empty().append($("<h1>").text('All done!'));
+    mainEl.empty().append($("<h3>").text('All done!'));
     mainEl.append($('<p>').text(`Your final score is: ${score}.`));
     remainingTime = 0;
-    quizActive=false;
+    quizActive = false;
     renderTime();
 
     console.log('highScores.score.length', highScores.score.length);
     // check if high score
     if(highScores.score.length < 5 || score > highScores.score[highScores.score.length-1].score)
     {
-        console.log('High Score!');
-        mainEl.append('<p><input id="initial"></input> Enter your initials <button id="high-score-btn">Submit</button></p>');
+        mainEl.append('<p>Enter your initials: <input id="initial"></input><button id="high-score-btn" class="btn btn-primary">Submit</button></p>');
         $('#high-score-btn').on('click', function(){
             // save the high score
             highScores.score.push({score: score, initial: $('#initial').val()});
@@ -118,25 +125,31 @@ function endQuiz(){
             saveScoreToLocal();
             renderScores();
         });
+    }else{
+        var buttonEl = $('<button>').text('Ok').addClass('btn btn-primary');
+        buttonEl.on('click', renderIntro);
+        mainEl.append(buttonEl);
     }
-
-
 }
 
 function renderScores(){
-    mainEl.empty().append($('<h1>').text("High Scores"));
+    mainEl.empty().append($('<h3>').text("High Scores"));
     var listEl = $('<ol>');
     for(var i = 0; i < highScores.score.length; i++){
         listEl.append($('<li>').text(`${highScores.score[i].initial}\t${highScores.score[i].score}`));
     }
     mainEl.append(listEl);
-    var buttonEl = $('<button>').text('Close');
+    var buttonEl = $('<button>').text('Close').addClass('btn btn-primary');
     buttonEl.on('click', renderIntro);
     mainEl.append(buttonEl);
 }
 
 function renderTime(){
-    timeEl.text(remainingTime);
+    if(remainingTime > 0){
+        timeEl.text(`Time: ${remainingTime}`);
+    }else{
+        timeEl.text('');
+    }
 }
 
 function saveScoreToLocal(){
