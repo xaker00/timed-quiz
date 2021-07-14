@@ -1,7 +1,7 @@
 # Timed Code Quiz
 
 Simple coding quiz in javascript with a score based on how fast the user answers the questions.
-![screenshot](./doc/screenshot.png)
+![screenshot](https://github.com/xaker00/timed-quiz/blob/master/doc/Screenshot.png?raw=true)
 
 **Features:**
 
